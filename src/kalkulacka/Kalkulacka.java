@@ -9,10 +9,10 @@ public class Kalkulacka extends JFrame implements ActionListener {
 
 	/* A tady je vizuální část */
 
-	JPanel[] row = new JPanel[6]; // máme 6 řádek dispej + butonků v okně
+	JPanel[] row = new JPanel[6]; // máme 6 řádek: dispej + butonků v okně
 	JButton[] button = new JButton[18];// počet butonků
 
-	// deklarace názvu butonků, inicializujeme v loopu (šetříme místem)
+	// deklarace názvu butonků, inicializujeme v cyklu (šetříme místem)
 	String[] buttonString = { "7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3", "*", "0", ".", "+/-", "/", "C", "=" };
 
 	int[] dimW = { 200, 50, 100 }; // jaké máme typy šířek pro butonky
@@ -22,23 +22,22 @@ public class Kalkulacka extends JFrame implements ActionListener {
 	Dimension regularDim = new Dimension(dimW[1], dimH[1]);
 	Dimension ceeButDim = new Dimension(dimW[2], dimH[1]);
 
-	boolean[] function = new boolean[4]; // deklarace funkcí pro sčítání,
-											// odčítání, násobení a dělení
+	boolean[] function = new boolean[4]; // deklarace funkcí pro sčítání,odčítání, násobení a dělení
+											
 	double[] temporary = { 0, 0 };
 
-	JTextArea display = new JTextArea(2, 15); // vytvoření displeje (řádky,
-												// sloupce)
+	JTextArea display = new JTextArea(2, 15); // vytvoření displeje (řádky,sloupce)
+											
 	Font font = new Font("Arial", Font.BOLD, 15);
 
 	public Kalkulacka() {
 		super("Kalkulačka");
-		setDesign(); // nahodíme "look and feel" Nimbus, ať je ot k světu :)
+		setDesign(); // nahodíme "look and feel" Nimbus, ať je to k světu :)
 		setSize(230, 330);// velikost okna (šířka, výška)
 		setResizable(false);// nešahat na velikost okna
 		setDefaultCloseOperation(EXIT_ON_CLOSE);// okno se zavře křížkem
-		setLayout(new GridLayout(6, 5)); // rozložení okna (řádky, množství
-											// komponent)- chci 5 řádek po max 5
-											// komponentech
+		setLayout(new GridLayout(6, 5)); // rozložení okna (řádky, množství komponent)- chci 5 řádek po max 5 komponentech
+											 
 
 		// inicializace řádek
 		for (int i = 0; i < 6; i++)
@@ -48,14 +47,12 @@ public class Kalkulacka extends JFrame implements ActionListener {
 		for (int i = 0; i < 4; i++)
 			function[i] = false;
 
-		FlowLayout f1 = new FlowLayout(FlowLayout.CENTER); // vycentrujeme první
-															// komponentu neboli
-															// "displej" na
-															// střed
+		FlowLayout f1 = new FlowLayout(FlowLayout.CENTER); // vycentrujeme první komponentu neboli "displej" na střed
+						
 		row[0].setLayout(f1);
 
-		FlowLayout f2 = new FlowLayout(FlowLayout.CENTER, 1, 1);// vycentrujeme
-																// zbylé řádky
+		FlowLayout f2 = new FlowLayout(FlowLayout.CENTER, 1, 1);// vycentrujeme zbylé řádky
+															
 		for (int i = 1; i < 6; i++)
 			row[i].setLayout(f2);
 
@@ -69,14 +66,9 @@ public class Kalkulacka extends JFrame implements ActionListener {
 
 		// nastavení displeje
 		display.setFont(font);
-		display.setEditable(false); // uživatel nemůže hrabat do displeje, nelze
-									// ani psát z klávesnice
-		display.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);// vstup
-																			// jde
-																			// z
-																			// prava
-																			// do
-																			// leva
+		display.setEditable(false); // uživatel nemůže hrabat do displeje, nelze ani psát z klávesnice
+		display.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);// vstup jde z prava do leva
+																			
 		display.setPreferredSize(displayDim);
 
 		// stanovíme velikosti butonků
@@ -84,7 +76,7 @@ public class Kalkulacka extends JFrame implements ActionListener {
 			button[i].setPreferredSize(regularDim);
 
 		for (int i = 16; i < 18; i++)
-			button[i].setPreferredSize(ceeButDim);// C a =
+			button[i].setPreferredSize(ceeButDim);// "C" a "="
 		// -----
 
 		row[0].add(display); // do první řádky vložíme displej
@@ -129,32 +121,23 @@ public class Kalkulacka extends JFrame implements ActionListener {
 		try {
 			display.setText(""); // nastaví text v dispeji na prázdné okno
 			for (int i = 0; i < 4; i++)
-				function[i] = false; // nastaví všechny 4 funkce na false, čili
-										// je "vynuluje"
+				function[i] = false; // nastaví všechny 4 funkce na false, čili je "vynuluje"
+									
 			for (int i = 0; i < 2; i++)
 				temporary[i] = 0; // proměné pro načítání nastaví zpět na 0
-		} catch (NullPointerException e) {// sice nevím, k čemu to je, ale je
-											// dobré to tam mít dle
-											// Stackoverflow :D
+		} catch (NullPointerException e) {// sice nevím, k čemu to je, ale dle Stackoverflow je to důležité :)
+											
 		}
 	}
 
 	public void getPosNeg() {
 		try {
-			double value = Double.parseDouble(display.getText()); // parseDouble
-																	// vrací
-																	// hodnotu
-																	// zobrazenou
-																	// v
-																	// displaji
-																	// parsovanou
-																	// do doublu
+			double value = Double.parseDouble(display.getText()); // parseDouble vrací text zobrazený v dispeji jako double
+																	
 			if (value != 0) {
-				value = value * (-1); // pokud hodnota value není ronvna 0,
-										// přidá se - vynásobení -1
-				display.setText(Double.toString(value)); // na displej se vypíše
-															// nová hodnota jako
-															// String
+				value = value * (-1); // pokud hodnota value není ronvna 0, přidá se - vynásobení -1							
+				display.setText(Double.toString(value)); // na displej se vypíše nová hodnota jako text
+										
 			} else {
 			}
 		} catch (NumberFormatException e) {
@@ -168,8 +151,8 @@ public class Kalkulacka extends JFrame implements ActionListener {
 		String temp1 = Double.toString(temporary[1]); //řetězec pro text druhé dočasné proměnné
 		try {
 			if (temp0.contains("-")) { // pokud první řetězec obsahuje "-"
-				String[] temp00 = temp0.split("-", 2); // rozdě řetězec na dca v místě "-"
-				temporary[0] = (Double.parseDouble(temp00[1]) * -1); // a dej řetězec zpět ve formě doublu
+				String[] temp00 = temp0.split("-", 2); // rozděl řetězec na dva v místě "-"
+				temporary[0] = (Double.parseDouble(temp00[1]) * -1); // a vrať řetězec zpět ve formě doublu
 			}
 			if (temp1.contains("-")) { //totéž z druhou dočasnou proměnnou
 				String[] temp11 = temp1.split("-", 2);
